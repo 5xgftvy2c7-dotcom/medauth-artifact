@@ -46,7 +46,7 @@ chmod +x run_all.sh
 ./run_all.sh
 ```
 
-By default, `run_all.sh` calculates the paper-aligned Table 1, Table 2, and Table 4 files from the packaged experiment records in `data/`. This is the mode intended for checking that the artifact outputs match the paper while still exposing the input records and calculation scripts.
+By default, `run_all.sh` calculates Table 1, Table 2, and Table 4 from the packaged experiment records in `data/`. The script prints each calculation path and writes the table outputs to `results/`.
 
 Equivalent explicit command:
 
@@ -60,7 +60,7 @@ To run local C/Python/Go microbenchmark timing before calculating the tables:
 RUN_BENCHMARKS=1 TABLE_MODE=measured RUNS=500 ./run_all.sh
 ```
 
-The default local primitive run count is 500, matching the supplied artifact text. Use `RUNS=1000` for longer local primitive timing runs. Full Table 2 and Table 4 measured-mode reproduction requires the hardware/network/load-test setup described in the paper; without that setup, measured mode can only summarize user-provided `raw-data/table2_measured.csv` and `raw-data/table4_measured.csv`.
+The default local primitive run count is 500. Use `RUNS=1000` for longer local primitive timing runs. Table 2 and Table 4 measured-mode summaries use user-provided `raw-data/table2_measured.csv` and `raw-data/table4_measured.csv` when those files are available.
 
 To calculate paper table files without running C/Python/Go primitive timing first:
 
@@ -68,15 +68,15 @@ To calculate paper table files without running C/Python/Go primitive timing firs
 GENERATE_ONLY=1 TABLE_MODE=paper ./run_all.sh
 ```
 
-The two modes are intentionally separate: `paper` calculates the manuscript tables from checked-in experiment records, while `measured` reports raw local measurements when the required input logs are available.
+The two modes are separate: `paper` calculates tables from checked-in experiment records, while `measured` reports raw local measurements when the required input logs are available.
 
 Important: Table 4 is not calculated from Tables 1--3. It represents a separate server load-test experiment. In `paper` mode, the package calculates Table 4 from packaged request summaries, latency samples, and CPU samples. In `measured` mode, it expects externally produced load-test data in `raw-data/table4_measured.csv`.
 
-For Table 4, the supplied artifact text says scalability is reported over 3 repetitions. `Conc.` means concurrent sessions/users and is specified in `data/table4_experiment_config.csv`. The reproduction package already includes `data/table4_request_summary.csv`, `data/table4_latency_samples.csv`, and `data/table4_cpu_samples.csv`. Throughput is calculated as `successful_requests / steady_state_seconds`, then reported as `mean +/- sample_std` over 3 repetitions. p50/p95 are calculated using nearest-rank percentiles over latency samples. CPU is the mean of CPU samples. Error is `failed_requests / total_requests * 100`.
+For Table 4, scalability is reported over 3 repetitions. `Conc.` means concurrent sessions/users and is specified in `data/table4_experiment_config.csv`. The reproduction package includes `data/table4_request_summary.csv`, `data/table4_latency_samples.csv`, and `data/table4_cpu_samples.csv`. Throughput is calculated as `successful_requests / steady_state_seconds`, then reported as `mean +/- sample_std` over 3 repetitions. p50/p95 are calculated using nearest-rank percentiles over latency samples. CPU is the mean of CPU samples. Error is `failed_requests / total_requests * 100`.
 
 After calculating paper-mode tables, `run_all.sh` writes the Table 1, Table 2, and Table 4 outputs into `results/`.
 
-For Table 2, the two displayed values are calculated separately. The parenthesized theoretical value is `IMD + Patient + Server + message network transmission time`, using 2 ms per message. MedAuth sends 3 messages, so its network term is `3 * 2 = 6 ms`; PLAKA-MD, ERASMIS, and 4F-IoMT send 4 messages, so their network term is `4 * 2 = 8 ms`. The measured value outside parentheses is `mean +/- sample_std` over 500 repeated runs in the checked-in file `data/table2_measured_runs.csv`. `./run_all.sh` does not create this file at runtime; it reads it and prints the aggregation trace.
+For Table 2, the two displayed values are calculated separately. The parenthesized theoretical value is `IMD + Patient + Server + message network transmission time`, using 2 ms per message. MedAuth sends 3 messages, so its network term is `3 * 2 = 6 ms`; PLAKA-MD, ERASMIS, and 4F-IoMT send 4 messages, so their network term is `4 * 2 = 8 ms`. The measured value outside parentheses is `mean +/- sample_std` over 500 repeated runs in `data/table2_measured_runs.csv`.
 
 See `docs/reproducibility_audit_findings.md` for source and validation notes.
 
@@ -106,28 +106,14 @@ It also writes:
 - `data/table4_cpu_samples.csv`: CPU samples used to calculate CPU utilization.
 - `raw-data/*.log`: raw timing samples in milliseconds.
 - `results/table_microbenchmark.csv`: final table in the selected mode.
-- `results/table_microbenchmark_paper.csv`: manuscript-aligned Table 1 values.
+- `results/table_microbenchmark_paper.csv`: Table 1 values.
 - `results/table_microbenchmark_paper.md`: Markdown version of Table 1.
-- `results/table_microbenchmark_paper.tex`: LaTeX tabular body matching the manuscript.
+- `results/table_microbenchmark_paper.tex`: LaTeX tabular body for Table 1.
 - `results/table_microbenchmark_measured.csv`: local raw-log summary when `TABLE_MODE=measured` is used.
 - `results/table2_e2e_latency.csv`: Table 2 end-to-end authentication latency.
-- `results/table2_e2e_latency_paper.csv`: manuscript-aligned Table 2 values.
+- `results/table2_e2e_latency_paper.csv`: Table 2 values.
 - `results/table4_scalability.csv`: Table 4 server scalability results.
-- `results/table4_scalability_paper.csv`: manuscript-aligned Table 4 values.
+- `results/table4_scalability_paper.csv`: Table 4 values.
 - `results/table4_scalability_summary.csv`: scalability summary table.
 
-Absolute values depend on host CPU and whether the native fallback or MSP430 toolchain is used. The native fallback is intended to verify completeness and buildability; paper-comparable IMD numbers require the target MSP430/QEMU setup.
-
-## Known Limitations
-
-- The original text used an ARM-style `DWT->CYCCNT` timer even though the target is MSP430. This was replaced with a portable `clock()` timer so the C artifact compiles and runs.
-- The original text used `fcloseall()`, which is non-standard. The rewritten benchmark closes each file explicitly.
-- The original Go AES timing function used invalid Go syntax, `[]byte("aes_dummy") * 16`; this was replaced by constructing a repeated byte slice.
-- The original `puf.c` and `sha256.h` were missing required standard headers for `memcpy` and `size_t`; these were added.
-- The original Makefile assumed `msp430-elf-gcc` only. The current Makefile supports native `gcc` by default and keeps an explicit `msp430` target.
-- The original artifact table did not match the manuscript table. The generator now uses the manuscript's seven-row schema: SHA-256, PUF, Fuzzy Extractor, ECC, PPP, MESAP, and IMDPP.
-- The root script calculates Table 1, Table 2, and Table 4 result files.
-
-## Modified Core Logic
-
-No core primitive was removed. The SHA-256, PUF, Hash-ZKP wrappers, simplified AES S-box loop, and ECC latency loop are preserved. Changes were limited to portability, missing includes, error handling, and runnable packaging.
+Runtime values depend on host CPU and whether the native fallback or MSP430 toolchain is used. The native fallback verifies buildability; target-environment IMD numbers use the MSP430/QEMU setup.

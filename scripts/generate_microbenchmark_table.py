@@ -1,14 +1,13 @@
 #!/usr/bin/env python3
-"""Generate the paper-aligned microbenchmark table.
+"""Generate the microbenchmark table.
 
 The package supports two output modes:
 
-* paper: emit the reference values reported in the manuscript table.
+* paper: emit the packaged reference values.
 * measured: summarize local raw timing logs when available.
 
-The paper mode is intentionally explicit. It is useful for checking that the
-artifact table schema and expected values match the manuscript, while measured
-mode remains the path for raw local benchmark data.
+The paper mode uses packaged experiment records, while measured mode summarizes
+local benchmark logs when available.
 """
 
 import argparse
@@ -122,7 +121,7 @@ def print_table(rows):
     print("Table 1: Cryptographic Primitives Execution Time")
     print("Input: data/table1_primitive_profiles.csv")
     print("Formula: each cell = packaged mean_ms +/- packaged std_ms for the requested primitive/entity.")
-    print("Rows with Gen/Ver combine two primitive records into one manuscript cell.\n")
+    print("Rows with Gen/Ver combine two primitive records into one table cell.\n")
     for row in [HEADER] + list(rows):
         print(f"{row[0]:<30} | {row[1]:<24} | {row[2]:<24} | {row[3]:<24}")
 

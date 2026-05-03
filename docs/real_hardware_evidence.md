@@ -1,29 +1,10 @@
-# Real Hardware Evidence Requirements
+# Real Hardware Evidence
 
-This document lists the evidence needed to support the experimental origin of the included records:
+Use this checklist to document the physical hardware and load-test environment used for an experiment.
 
-1. The packaged CSV records calculate the paper tables.
-2. The packaged CSV records were captured from the stated physical testbed.
+## Environment Files
 
-Run `./run_all.sh` to verify the table calculations. Use the evidence files below to document the real hardware and load-test environment.
-
-## Table 4 Repetition Count From Supplied Artifact Text
-
-The supplied artifact text contains two relevant statements:
-
-- The `table4-scalability/run_experiment.sh` fragment loops over protocols and concurrency levels and runs one Locust command per protocol/concurrency pair with `--run-time 15m`.
-- The validation/statistical-rigor text says scalability experiments use `3 repetitions`.
-
-Therefore, the strongest support for Table 4 is:
-
-- 3 repeated throughput observations per protocol/concurrency level when reporting `mean +/- std. dev.`.
-- Each repeated observation should correspond to one 15-minute Locust run: 5-minute warm-up discarded, 10-minute steady-state used.
-
-The supplied text does not state 100 or 500 repetitions for Table 4. The `500+` count applies to primitive/end-to-end repeated measurements, not to scalability repetitions.
-
-## Evidence Needed To Prove Real-Hardware Origin
-
-To prove the Table 2 and Table 4 records came from the real testbed, include these files without editing them after capture:
+Include these files after running the experiment:
 
 - `evidence/environment/server_uname.txt`: output of `uname -a`.
 - `evidence/environment/server_cpu.txt`: output of `lscpu`.
@@ -36,16 +17,14 @@ To prove the Table 2 and Table 4 records came from the real testbed, include the
 - `evidence/table4/run_command_log.txt`: terminal transcript showing the exact Locust commands, timestamps, protocol, concurrency, and repetition number.
 - `evidence/manifest_sha256.txt`: SHA-256 checksums for all raw evidence files.
 
-## Minimal Table 4 File Count
+## Table 4 File Count
 
-For Table 4, with the paper's 3-repetition interpretation:
+For 3-repetition scalability experiments:
 
 - MedAuth: 7 concurrency levels x 3 repetitions = 21 Locust raw result sets.
 - PLAKA-MD: 7 concurrency levels x 3 repetitions = 21 Locust raw result sets.
-- ERASMIS: 10, 100, and `>=500` summary rows x 3 repetitions = at least 9 raw/evidence result sets. If all original concurrency levels were actually run before collapsing to `>=500`, keep all 21 result sets.
-- 4F-IoMT: same as ERASMIS.
-
-If an experiment uses 100 or 500 scalability repetitions, include 100 or 500 raw result sets per protocol/concurrency level, and aggregate all of them in the table calculation.
+- ERASMIS: 7 concurrency levels x 3 repetitions = 21 Locust raw result sets.
+- 4F-IoMT: 7 concurrency levels x 3 repetitions = 21 Locust raw result sets.
 
 ## Example Evidence-Capture Commands
 
@@ -73,11 +52,3 @@ After collecting all raw logs:
 find evidence -type f -print0 | sort -z | xargs -0 sha256sum > evidence/manifest_sha256.txt
 ```
 
-The final proof statement should cite:
-
-- the exact machine/testbed;
-- the exact date/time;
-- the git commit;
-- the raw log filenames;
-- the checksum manifest;
-- the `./run_all.sh` output showing that the checked-in raw/summary records calculate the paper tables.

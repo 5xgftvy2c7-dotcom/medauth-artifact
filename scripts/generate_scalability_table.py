@@ -174,12 +174,12 @@ def write_latex(path, rows):
         r"\textbf{Protocol} & \textbf{Conc.} & \textbf{Throughput (auth/s)} & \textbf{Latency (p50/p95, ms)} & \textbf{CPU (\%)} & \textbf{Error (\%)} \\",
         r"\midrule",
     ]
-    previous = None
+    prior_protocol = None
     for protocol, conc, throughput, p50, p95, cpu, error in rows:
-        label = protocol if protocol != previous else ""
+        label = protocol if protocol != prior_protocol else ""
         latex_throughput = throughput.replace("+/-", r"$\pm$")
         lines.append(f"{label} & {conc} & {latex_throughput} & {p50} / {p95} & {cpu} & {error} \\\\")
-        previous = protocol
+        prior_protocol = protocol
     lines.extend([r"\bottomrule", r"\end{tabular}", ""])
     path.write_text("\n".join(lines), encoding="utf-8")
 
