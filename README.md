@@ -1,6 +1,6 @@
 # MedAuth Microbenchmark Reproducibility Package
 
-This package provides the MedAuth microbenchmark artifact described in `2026.2-Microbenchmark Reproducibility Package.txt`.
+This package provides the MedAuth microbenchmark artifact.
 
 ## Directory Layout
 
@@ -12,7 +12,7 @@ This package provides the MedAuth microbenchmark artifact described in `2026.2-M
 - `results/`: calculated summary CSV files.
 - `docs/`: notes and audit material.
 
-This layout is suitable for a GitHub artifact/reproduction package because it has a single root README, executable entry point, platform-separated source, output directories, and no absolute local paths in the runnable scripts.
+
 
 ## Dependencies
 
@@ -68,9 +68,6 @@ To calculate paper table files without running C/Python/Go primitive timing firs
 GENERATE_ONLY=1 TABLE_MODE=paper ./run_all.sh
 ```
 
-The two modes are separate: `paper` calculates tables from checked-in experiment records, while `measured` reports raw local measurements when the required input logs are available.
-
-Important: Table 4 is not calculated from Tables 1--3. It represents a separate server load-test experiment. In `paper` mode, the package calculates Table 4 from packaged request summaries, latency samples, and CPU samples. In `measured` mode, it expects externally produced load-test data in `raw-data/table4_measured.csv`.
 
 For Table 4, scalability is reported over 3 repetitions. `Conc.` means concurrent sessions/users and is specified in `data/table4_experiment_config.csv`. The reproduction package includes `data/table4_request_summary.csv`, `data/table4_latency_samples.csv`, and `data/table4_cpu_samples.csv`. Throughput is calculated as `successful_requests / steady_state_seconds`, then reported as `mean +/- sample_std` over 3 repetitions. p50/p95 are calculated using nearest-rank percentiles over latency samples. CPU is the mean of CPU samples. Error is `failed_requests / total_requests * 100`.
 
@@ -79,8 +76,6 @@ After calculating paper-mode tables, `run_all.sh` writes the Table 1, Table 2, a
 For Table 2, the two displayed values are calculated separately. The parenthesized theoretical value is `IMD + Patient + Server + message network transmission time`, using 2 ms per message. MedAuth sends 3 messages, so its network term is `3 * 2 = 6 ms`; PLAKA-MD, ERASMIS, and 4F-IoMT send 4 messages, so their network term is `4 * 2 = 8 ms`. The measured value outside parentheses is `mean +/- sample_std` over 500 repeated runs in `data/table2_measured_runs.csv`.
 
 See `docs/reproducibility_audit_findings.md` for source and validation notes.
-
-Re-running the experiments on real MSP430/RPi4/i7 hardware should reproduce the reported values within the paper's tolerance, not necessarily byte-for-byte identical CSV values. Exact equality is provided by paper mode because it uses the packaged experiment records checked into `data/`.
 
 ## Expected Output
 
