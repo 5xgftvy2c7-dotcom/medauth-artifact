@@ -1,0 +1,21 @@
+protocol,concurrency,run_time_seconds,warmup_seconds,steady_state_seconds,repetitions,load_tool,monitoring
+MedAuth,10,900,300,600,3,Locust 2.15.1,Prometheus+node_exporter
+MedAuth,100,900,300,600,3,Locust 2.15.1,Prometheus+node_exporter
+MedAuth,500,900,300,600,3,Locust 2.15.1,Prometheus+node_exporter
+MedAuth,1000,900,300,600,3,Locust 2.15.1,Prometheus+node_exporter
+MedAuth,2000,900,300,600,3,Locust 2.15.1,Prometheus+node_exporter
+MedAuth,5000,900,300,600,3,Locust 2.15.1,Prometheus+node_exporter
+MedAuth,10000,900,300,600,3,Locust 2.15.1,Prometheus+node_exporter
+PLAKA-MD,10,900,300,600,3,Locust 2.15.1,Prometheus+node_exporter
+PLAKA-MD,100,900,300,600,3,Locust 2.15.1,Prometheus+node_exporter
+PLAKA-MD,500,900,300,600,3,Locust 2.15.1,Prometheus+node_exporter
+PLAKA-MD,1000,900,300,600,3,Locust 2.15.1,Prometheus+node_exporter
+PLAKA-MD,2000,900,300,600,3,Locust 2.15.1,Prometheus+node_exporter
+PLAKA-MD,5000,900,300,600,3,Locust 2.15.1,Prometheus+node_exporter
+PLAKA-MD,10000,900,300,600,3,Locust 2.15.1,Prometheus+node_exporter
+ERASMIS,10,900,300,600,3,Locust 2.15.1,Prometheus+node_exporter
+ERASMIS,100,900,300,600,3,Locust 2.15.1,Prometheus+node_exporter
+ERASMIS,>=500,900,300,600,3,Locust 2.15.1,Prometheus+node_exporter
+4F-IoMT,10,900,300,600,3,Locust 2.15.1,Prometheus+node_exporter
+4F-IoMT,100,900,300,600,3,Locust 2.15.1,Prometheus+node_exporter
+4F-IoMT,>=500,900,300,600,3,Locust 2.15.1,Prometheus+node_exporter

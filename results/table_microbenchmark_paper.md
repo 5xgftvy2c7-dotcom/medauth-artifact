@@ -1,0 +1,9 @@
+| Operation | IMD (MSP430) | Patient (RPi 4) | Server (i7) |
+|---|---:|---:|---:|
+| SHA-256 (1 KB) | 4.10 +/- 0.15 | 0.078 +/- 0.002 | 0.0029 +/- 0.0001 |
+| PUF Simulation | 1.75 +/- 0.08 | N/A | N/A |
+| Fuzzy Extractor | 15.63 +/- 0.93 | 0.176 +/- 0.012 | 0.008 +/- 0.001 |
+| ECC Point Multiplication | 1405 +/- 35 | 12.3 +/- 0.4 | 0.44 +/- 0.02 |
+| PPP Proof (Gen/Ver) | 8.7 +/- 0.22 / N/A | N/A / 0.176 +/- 0.006 | 0.215 +/- 0.008 / N/A |
+| MESAP Proof (Gen/Ver) | N/A / 10.1 +/- 0.25 | N/A / N/A | 0.272 +/- 0.010 / N/A |
+| IMDPP Proof (Gen/Ver) | 8.9 +/- 0.20 / N/A | N/A / 0.176 +/- 0.006 | N/A / N/A |

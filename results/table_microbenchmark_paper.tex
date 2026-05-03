@@ -1,0 +1,13 @@
+\begin{tabular}{l|c|c|c}
+\toprule
+\textbf{Operation} & \textbf{IMD (MSP430)} & \textbf{Patient (RPi 4)} & \textbf{Server (i7)} \\
+\midrule
+SHA-256 (1 KB) & 4.10 $\pm$ 0.15 & 0.078 $\pm$ 0.002 & 0.0029 $\pm$ 0.0001 \\
+PUF Simulation & 1.75 $\pm$ 0.08 & N/A & N/A \\
+Fuzzy Extractor & 15.63 $\pm$ 0.93 & 0.176 $\pm$ 0.012 & 0.008 $\pm$ 0.001 \\
+ECC Point Multiplication & 1405 $\pm$ 35 & 12.3 $\pm$ 0.4 & 0.44 $\pm$ 0.02 \\
+PPP Proof (Gen/Ver) & 8.7 $\pm$ 0.22 / N/A & N/A / 0.176 $\pm$ 0.006 & 0.215 $\pm$ 0.008 / N/A \\
+MESAP Proof (Gen/Ver) & N/A / 10.1 $\pm$ 0.25 & N/A / N/A & 0.272 $\pm$ 0.010 / N/A \\
+IMDPP Proof (Gen/Ver) & 8.9 $\pm$ 0.20 / N/A & N/A / 0.176 $\pm$ 0.006 & N/A / N/A \\
+\bottomrule
+\end{tabular}

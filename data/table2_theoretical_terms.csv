@@ -1,0 +1,17 @@
+protocol,component,term,value_ms,source
+MedAuth,IMD,reported_imd_theoretical_component,33.05,artifact_sample_output
+MedAuth,Patient,reported_patient_theoretical_component,1.26,artifact_sample_output
+MedAuth,Server,reported_server_theoretical_component,0.51,artifact_sample_output
+MedAuth,Network,message_transmission_3_messages_2ms_each,6.00,paper_network_model
+PLAKA-MD,IMD,reported_imd_theoretical_component,30.45,artifact_sample_output
+PLAKA-MD,Patient,reported_patient_theoretical_component,1.112,artifact_sample_output
+PLAKA-MD,Server,reported_server_theoretical_component,0.0377,artifact_sample_output
+PLAKA-MD,Network,message_transmission_4_messages_2ms_each,8.00,paper_network_model
+ERASMIS,IMD,reported_imd_theoretical_component,2818.2,artifact_sample_output
+ERASMIS,Patient,reported_patient_theoretical_component,1.068,artifact_sample_output
+ERASMIS,Server,reported_server_theoretical_component,0.022,artifact_sample_output
+ERASMIS,Network,message_transmission_4_messages_2ms_each,8.00,paper_network_model
+4F-IoMT,IMD,reported_imd_theoretical_component,2840.45,artifact_sample_output
+4F-IoMT,Patient,reported_patient_theoretical_component,1.458,artifact_sample_output
+4F-IoMT,Server,reported_server_theoretical_component,0.0548,artifact_sample_output
+4F-IoMT,Network,message_transmission_4_messages_2ms_each,8.00,paper_network_model

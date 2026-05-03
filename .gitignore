@@ -1,0 +1,25 @@
+# Build outputs
+*.o
+*.elf
+*.exe
+platform/imd-msp430/imd_microbenchmark
+platform/imd-msp430/imd_microbenchmark.exe
+platform/i7-server/*_server
+
+# Python/cache files
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+
+# Go local artifacts
+*.test
+coverage.out
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+*.swp
+*.tmp
+

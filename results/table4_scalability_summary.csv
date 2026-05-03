@@ -1,0 +1,5 @@
+Protocol,MST (auth/s),Saturation Point,<10ms @,Error @10k
+MedAuth,1250,500--1k,<=500,5.2%
+PLAKA-MD,1420,1k--2k,<=1k,3.5%
+ERASMIS,0.3,<10,None,100.0%
+4F-IoMT,0.28,<10,None,100.0%
